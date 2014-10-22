@@ -20,6 +20,18 @@ function test_01 {
     if [ $? != 0 ]; then
         exit 1
     fi
+    echo test_01 OK
+}
+
+
+function test_02 {
+    emacs -nw ./test_data/test_02_before.py -f py-autopep8-before-save -f save-buffer -f save-buffers-kill-terminal
+
+    diff ./test_data/test_02_before.py ./test_data/test_02_after.py
+    if [ $? != 0 ]; then
+        exit 1
+    fi
+    echo test_02 OK
 }
 
 
@@ -31,6 +43,7 @@ function main {
     install_package
 
     test_01
+    test_02
 }
 
 

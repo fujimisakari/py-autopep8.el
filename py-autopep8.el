@@ -4,7 +4,7 @@
 
 ;; Author: Friedrich Paetzke <paetzke@fastmail.fm>
 ;; URL: http://paetzke.me/project/py-autopep8.el
-;; Version: 0.5
+;; Version: 0.505
 
 ;;; Commentary:
 
@@ -90,8 +90,9 @@ Note that `--in-place' is used by default."
   (let ((tmpfile (make-temp-file "autopep8" nil ".py"))
         (patchbuf (get-buffer-create "*autopep8 patch*"))
         (errbuf (get-buffer-create "*autopep8 Errors*"))
-        (coding-system-for-read 'utf-8)
-        (coding-system-for-write 'utf-8))
+                                        ;(coding-system-for-read 'latin-1)
+                                        ;(coding-system-for-write 'latin-1)
+        )
     (with-current-buffer errbuf
       (setq buffer-read-only nil)
       (erase-buffer))
