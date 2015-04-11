@@ -81,10 +81,7 @@ Note that `--in-place' is used by default."
               (error "Invalid rcs patch or internal error in py-autopep8-apply-rcs-patch")))))))))
 
 
-;;;###autoload
-(defun py-autopep8 ()
-  "Formats the current buffer according to the autopep8 tool."
-  (interactive)
+(defun py-autopep8-execute ()
   (when (not (executable-find "autopep8"))
     (error "\"autopep8\" command not found.  Install autopep8 with \"pip install autopep8\""))
   (let ((tmpfile (make-temp-file "autopep8" nil ".py"))
@@ -110,6 +107,26 @@ Note that `--in-place' is used by default."
       (error "Could not apply autopep8. Check *autopep8 Errors* for details"))
     (kill-buffer patchbuf)
     (delete-file tmpfile)))
+
+
+;;;###autoload
+(defun py-autopep8 ()
+  "Formats the current buffer according to the autopep8 tool."
+  (interactive)
+  (py-autopep8-execute))
+
+
+;;;###autoload
+(defun py-autopep8-region (start end)
+  "Formats the code in region between START and END according to the autopep8 tool"
+  (interactive
+   (if (use-region-p)
+       (list (region-beginning) (region-end))
+     (list (point) (point))))
+  (let ((start-line (number-to-string (count-lines (point-min) start)))
+        (end-line (number-to-string (count-lines (point-min) end))))
+    (setq py-autopep8-options (list "--range" start-line end-line))
+    (py-autopep8-execute)))
 
 
 ;;;###autoload
