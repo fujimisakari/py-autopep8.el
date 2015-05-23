@@ -125,7 +125,7 @@ Note that `--in-place' is used by default."
      (list (point) (point))))
   (let ((start-line (number-to-string (count-lines (point-min) start)))
         (end-line (number-to-string (count-lines (point-min) end))))
-    (setq py-autopep8-options (list "--range" start-line end-line))
+    (setq py-autopep8-options (append py-autopep8-options (list "--range" start-line end-line)))
     (py-autopep8-execute)))
 
 
